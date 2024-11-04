@@ -15,4 +15,10 @@ class Item extends Model
         'price',
         'is_selling',
     ];
+
+    public function items()
+    {
+        return $this->belongsToMany(Purchase::class)
+        ->withPivot('quantity');
+    }
 }
