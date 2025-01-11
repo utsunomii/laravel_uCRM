@@ -6,7 +6,9 @@ use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
 use App\Models\Item;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
+Log::info('ItemController::class');
 class ItemController extends Controller
 {
     /**
@@ -16,6 +18,7 @@ class ItemController extends Controller
      */
     public function index()
     {
+        Log::info('ItemController::index');
         $items = Item::select('id', 'name', 'price', 'is_selling')->get();
         return Inertia::render('Items/Index', [
             'items' => $items,
@@ -29,6 +32,7 @@ class ItemController extends Controller
      */
     public function create()
     {
+        Log::info('ItemController::create');
         return Inertia::render('Items/Create');
     }
 
@@ -40,6 +44,7 @@ class ItemController extends Controller
      */
     public function store(StoreItemRequest $request)
     {
+        Log::info('ItemController::store');
         Item::create([
             'name' => $request->name,
             'memo' => $request->memo,
@@ -62,6 +67,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
+        Log::info('ItemController::show');
         return Inertia::render('Items/Show', [
             'item' => $item,
         ]);
@@ -89,6 +95,8 @@ class ItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item)
     {
+        Log::info('ItemController::update');
+        
         // dd($item->name, $request->name);
         $item->name = $request->name;
         $item->memo = $request->memo;
@@ -111,12 +119,27 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
+        Log::info('ItemController::destroy');
         $item->delete();
 
         return to_route('items.index')
         ->with([
             'message' => '削除しました。',
             'status' => 'danger'
+        ]);
+    }
+
+    /**
+     * Show the form for deleting the specified resource.
+     *
+     * @param  \App\Models\Item  $item
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Item $item)
+    {
+        Log::info('ItemController::delete');
+        return Inertia::render('Items/Delete', [
+            'item' => $item,
         ]);
     }
 }

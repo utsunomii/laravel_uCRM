@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('item_purchase', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('item_id')->constrained()->onUpdate('cascade');
-            $table->foreignId('purchase_id')->constrained()->onUpdate('cascade');
+            $table->foreignId('item_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('purchase_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('quantity');
             $table->timestamps();
         });

@@ -9,6 +9,8 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PurchaseController;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Log;
+Log::info('Route::resource(\'items\', ItemController::class)');
 
 Route::resource('items', ItemController::class)
 ->middleware(['auth', 'verified']);
